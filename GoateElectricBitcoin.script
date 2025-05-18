@@ -1,0 +1,20 @@
+// GoateElectricBitcoin.script
+OP_DUP OP_HASH160 <YOUR_BTC_ADDRESS> OP_EQUALVERIFY OP_CHECKSIG
+
+// Pseudo-code
+class GoateElectricBitcoin {
+    constructor() {
+        this.ownerBtcAddress = 'YOUR_BTC_ADDRESS';
+    }
+
+    async tradeAsset(fromAddress, toAddress, amount) {
+        const tx = await BitcoinRPC.sendToAddress(toAddress, amount);
+        console.log(`Sent ${amount} BTC`);
+        return tx;
+    }
+
+    async distributeRewards(node, reward) {
+        const ownerShare = reward * 0.8;
+        await BitcoinRPC.sendToAddress(this.ownerBtcAddress, ownerShare);
+    }
+}
