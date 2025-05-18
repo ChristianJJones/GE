@@ -1,0 +1,9 @@
+.black-bg { background-color: #000000; }
+.gold-text { color: #FFD700; }
+.banner { text-align: center; padding: 20px; }
+.device-manager, .gerastyx-playground, .goatepig-defi, .trade-assets, .transaction-history {
+    margin: 20px;
+}
+button { padding: 10px; background: #FFD700; color: #000; border: none; }
+.deposit { color: green; }
+.charge { color: blue; }
