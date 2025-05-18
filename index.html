@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Goate Electric</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="black-bg">
+    <div class="banner black-bg">
+        <h1 class="gold-text">Goate Electric</h1>
+        <img src="gold-goat-logo.png" alt="Holographic Logo">
+    </div>
+    <div class="auth">
+        <button onclick="authenticatePi()">Login with Pi</button>
+        <input type="password" id="pin" placeholder="4-Digit PIN">
+    </div>
+    <div class="device-manager">
+        <h2>Device Manager</h2>
+        <button onclick="connectDevice()">Connect Device</button>
+        <ul id="device-list"></ul>
+    </div>
+    <div class="gerastyx-playground">
+        <h2>Gerastyx Playground</h2>
+        <button onclick="playGame('GreyStax')">Grey Stax</button>
+        <button onclick="playGame('Spades')">Spades</button>
+        <!-- Add War, HomeTeamBets, PityPat, ScratchOffNFTs -->
+    </div>
+    <div class="goatepig-defi">
+        <h2>GoatePig DeFi</h2>
+        <button onclick="stakeTokens()">Stake $cP</button>
+        <button onclick="watchAd()">Watch Ad</button>
+        <button onclick="buyStockNFT()">Buy Stock NFT</button>
+    </div>
+    <div class="trade-assets">
+        <h2>Trade Assets</h2>
+        <select id="fromAsset">
+            <option value="PI">$PI</option>
+            <option value="XLM">$XLM</option>
+            <option value="BTC">$BTC</option>
+            <option value="ZPE">$ZPE</option>
+            <option value="ZPW">$ZPW</option>
+            <option value="GySt">$GySt</option>
+            <option value="GOATE">$GOATE</option>
+            <option value="cP">$cP</option>
+            <option value="GP">$GP</option>
+            <option value="USDT">$USDT</option>
+            <option value="USDC">$USDC</option>
+            <option value="ZDSNFT">ZeropointDigitalStockNFT</option>
+        </select>
+        <select id="toAsset"></select>
+        <input type="number" id="amount" placeholder="Amount">
+        <button onclick="tradeAsset()">Trade</button>
+    </div>
+    <div class="transaction-history">
+        <h2>Transaction History</h2>
+        <ul id="tx-list"></ul>
+    </div>
+    <script src="index.js"></script>
+</body>
+          </html>
