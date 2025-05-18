@@ -1,0 +1,43 @@
+// GoateElectric.soroban
+contract GoateElectric {
+    const OWNER_XLM: Address = "GAJ3Q63XG2VEPGFCECSUZF2D3ACFI6VW7P7JFW35HGWIBWNBGXCZP3DL";
+    const OWNER_PI: Address = "GBMWQWG7XFTIIYRH7HMVDKBQGSNIGQ2UGJU3SY4LYCADB4JTH2DPO2FY";
+    const ZPE_PRICE: u64 = 10000000; // $0.10 in microUSD
+    const ZPW_PRICE: u64 = 5000000000; // $5.00 in microUSD
+
+    // Consume $ZPE/$ZPW
+    fn consume_token(user: Address, token: Symbol, amount: u64) -> Result<()> {
+        require(token == "ZPE" || token == "ZPW", "Invalid token");
+        let token_contract = Token::new(token);
+        token_contract.transfer(user, OWNER_XLM, amount);
+        let usd_value = (token == "ZPE" ? amount * ZPE_PRICE : amount * ZPW_PRICE) / 1000000;
+        emit TokenConsumed(user, token, amount, usd_value);
+        Ok(())
+    }
+
+    // Trade $XLM, $ZPE, $ZPW, $USDC
+    fn trade_asset(user: Address, from_token: Symbol, to_token: Symbol, amount: u64) -> Result<()> {
+        let price = Chainlink.get_price(from_token, to_token); // Real-time
+        let to_amount = amount * price;
+        Token::new(from_token).transfer(user, OWNER_XLM, amount);
+        Token::new(to_token).transfer(OWNER_XLM, user, to_amount);
+        emit Trade(user, from_token, to_token, amount, to_amount);
+        Ok(())
+    }
+
+    // Node rewards ($XLM)
+    fn distribute_rewards(node: Address, reward: u64) -> Result<()> {
+        let owner_share = reward * 80 / 100;
+        let reserve_share = reward * 15 / 100;
+        let mediator_share = reward * 5 / 100;
+        Token::new("XLM").transfer(node, OWNER_XLM, owner_share);
+        Token::new("XLM").transfer(node, RESERVE_ADDRESS, reserve_share);
+        Token::new("XLM").transfer(node, OWNER_PI, mediator_share);
+        emit RewardDistributed(node, owner_share);
+        Ok(())
+    }
+
+    event TokenConsumed(Address user, Symbol token, u64 amount, u64 usd_value);
+    event Trade(Address user, Symbol from_token, Symbol to_token, u64 amount, u64 to_amount);
+    event RewardDistributed(Address node, u64 owner_share);
+}
